@@ -67,11 +67,12 @@ header i {
     gap: 16px;
     }
 
-.productos h2{
+.productos h2, .carrito h2, .compra h2{
     width: 100%;
     color: #fff;
     text-align: center;
     border: none;
+    border-radius: 5px;
     background-color: #000;
     padding: 15px 15px;
 }
@@ -85,7 +86,20 @@ header i {
     padding: 15px 15px;
 }
 
-.productos div button{
+.carrito, .compra{
+    border: none;
+    background: none;
+    background-color: #212529;
+    color: #fff;
+    padding: 15px 15px;
+}
+
+.compra div{
+    display: flex;
+    padding: 15px;
+}
+
+.productos div button, .carrito button, .compra button{
     border: none;
     background: none;
     background-color: #000;

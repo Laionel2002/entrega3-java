@@ -1,0 +1,17 @@
+[
+    {"id": 1, "nombre": "Remera", "precio": 12000, "descripcion": "Remera de algodon lisa", "oferta": true, "img": "https://laionel2002.github.io/entrega3-java/img/p1.jpg"},
+    {"id": 2, "nombre": "Remera", "precio": 16000, "descripcion": "Remera de laicra", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p6.jpg"},
+    {"id": 3, "nombre": "Remera", "precio": 10000, "descripcion": "Remera corte simple", "oferta": true, "img": "https://laionel2002.github.io/entrega3-java/img/p7.jpeg"},
+    {"id": 4, "nombre": "Pantalon", "precio": 45000, "descripcion": "Pantalon baggy", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p3.jpeg"},
+    {"id": 5, "nombre": "Pantalon", "precio": 60000, "descripcion": "Pantalon de jean estampado", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p4.jpeg"},
+    {"id": 6, "nombre": "Pantalon", "precio": 40000, "descripcion": "Pantalon de jean", "oferta": true, "img": "https://laionel2002.github.io/entrega3-java/img/p3.jpeg"},
+    {"id": 7, "nombre": "Buzo", "precio": 80000, "descripcion": "buzo Lacoste", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p2.jpg"},
+    {"id": 8, "nombre": "Buzo", "precio": 85000, "descripcion": "Buzo boxy fit", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p4.jpeg"},
+    {"id": 9, "nombre": "Buzo", "precio": 60000, "descripcion": "Buzo liso", "oferta": true, "img": "https://laionel2002.github.io/entrega3-java/img/p2.jpg"},
+    {"id": 10, "nombre": "Buzo", "precio": 95000, "descripcion": "Buzo DUkI", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p4.jpeg"},
+    {"id": 11, "nombre": "Calzado", "precio": 240000, "descripcion": "VANS", "oferta": true, "img": "https://laionel2002.github.io/entrega3-java/img/p5.jpeg"},
+    {"id": 12, "nombre": "Calzado", "precio": 350000, "descripcion": "Jordan 4", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p8.jpg"},
+    {"id": 13, "nombre": "Calzado", "precio": 300000, "descripcion": "Air max 1", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p9.jpg"},
+    {"id": 14, "nombre": "Calzado", "precio": 320000, "descripcion": "Nike TN", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p10.jpeg"},
+    {"id": 15, "nombre": "Calzado", "precio": 290000, "descripcion": "47 street", "oferta": false, "img": "https://laionel2002.github.io/entrega3-java/img/p5.jpeg"}
+]

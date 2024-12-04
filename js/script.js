@@ -1,21 +1,3 @@
-const stockProductos = [
-    {id: 1, nombre: "Remera", precio: 12000, descripcion: "Remera de algodon lisa", oferta: true, imagen: "../img/p1.jpg"},
-    {id: 2, nombre: "Remera", precio: 16000, descripcion: "Remera de laicra", oferta: false, imagen: "../img/p6.jpg"},
-    {id: 3, nombre: "Remera", precio: 10000, descripcion: "Remera corte simple", oferta: true, imagen: "../img/p7.jpeg"},
-    {id: 4, nombre: "Pantalon", precio: 45000, descripcion: "Pantalon baggy", oferta: false, imagen: "../img/p3.jpeg"},
-    {id: 5, nombre: "Pantalon", precio: 60000, descripcion: "Pantalon de jean estampado", oferta: false, imagen: "../img/p4.jpeg"},
-    {id: 6, nombre: "Pantalon", precio: 40000, descripcion: "Pantalon de jean", oferta: true, imagen: "../img/p3.jpeg"},
-    {id: 7, nombre: "Buzo", precio: 80000, descripcion: "buzo Lacoste", oferta: false, imagen: "../img/p2.jpg"},
-    {id: 8, nombre: "Buzo", precio: 85000, descripcion: "Buzo boxy fit", oferta: false, imagen: "../img/p4.jpeg"},
-    {id: 9, nombre: "Buzo", precio: 60000, descripcion: "Buzo liso", oferta: true, imagen: "../img/p2.jpg"},
-    {id: 10, nombre: "Buzo", precio: 95000, descripcion: "Buzo DUkI", oferta: false, imagen: "../img/p4.jpeg"},
-    {id: 11, nombre: "Calzado", precio: 240000, descripcion: "VANS", oferta: true, imagen: "../img/p5.jpeg"},
-    {id: 12, nombre: "Calzado", precio: 350000, descripcion: "Jordan 4", oferta: false, imagen: "../img/p8.jpg"},
-    {id: 13, nombre: "Calzado", precio: 300000, descripcion: "Air max 1", oferta: false, imagen: "../img/p9.jpg"},
-    {id: 14, nombre: "Calzado", precio: 320000, descripcion: "Nike TN", oferta: false, imagen: "../img/p10.jpeg"},
-    {id: 15, nombre: "Calzado", precio: 290000, descripcion: "47 street", oferta: false, imagen: "../img/p5.jpeg"}
-];
-
 const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const contenedorProductos = document.getElementById("contenedor-productos");
 const contenedorCarrito = document.getElementById("contenedor-carrito");
@@ -24,6 +6,20 @@ const botonOfertas = document.getElementById("ofertas");
 const botonTodos = document.getElementById("todos");
 const barraBusqueda = document.getElementById("busqueda");
 
+let stockProductos = [];
+
+// Obtener productos desde el archivo JSON
+const getData = async () => {
+    try {
+        const respuesta = await fetch("./js/stock.json");
+        stockProductos = await respuesta.json();
+        renderizarProductos(stockProductos);
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+// Renderizar productos
 const renderizarProductos = (array) => {
     if (!contenedorProductos) return;
     contenedorProductos.innerHTML = "";
@@ -32,7 +28,7 @@ const renderizarProductos = (array) => {
         div.classList.add("producto");
 
         div.innerHTML = `
-            <img src="${prd.imagen}" style="width: 100%; height: auto;">
+            <img src="${prd.img}" style="width: 100%; height: auto;">
             <h3>${prd.nombre}</h3>
             <p>$${prd.precio}</p>
             <button id="agregar${prd.id}">Comprar</button>
@@ -47,6 +43,7 @@ const renderizarProductos = (array) => {
     });
 };
 
+// Agregar productos al carrito
 const agregarCarrito = (id) => {
     const producto = stockProductos.find((prod) => prod.id === id);
 
@@ -65,6 +62,7 @@ const agregarCarrito = (id) => {
     }
 };
 
+// Actualizar carrito
 const actualizarCarrito = () => {
     if (!contenedorCarrito || !totalCarrito) return;
 
@@ -75,7 +73,7 @@ const actualizarCarrito = () => {
         div.classList.add("producto");
 
         div.innerHTML = `
-            <img src="${elm.imagen}" alt="${elm.nombre}" style="width: 100px; height: auto;">
+            <img src="${elm.img}" alt="${elm.nombre}" style="width: 100px; height: auto;">
             <h3>${elm.nombre}</h3>
             <p>$${elm.precio}</p>
             <p>Cantidad: 
@@ -112,6 +110,8 @@ const actualizarCarrito = () => {
 
     totalCarrito.textContent = `Total: $${carrito.reduce((acc, prod) => acc + (prod.precio * prod.cantidad), 0)}`;
 };
+
+// Eliminar producto del carrito
 const borrarDelCarrito = (id) => {
     const index = carrito.findIndex((prod) => prod.id === id);
     if (index > -1) {
@@ -121,6 +121,7 @@ const borrarDelCarrito = (id) => {
     }
 };
 
+// Guardar carrito en localStorage
 const guardarCarrito = () => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 };
@@ -147,6 +148,56 @@ if (barraBusqueda) {
     });
 }
 
+// Redirigir a la página de compra con los datos del carrito
+const botonComprar = document.getElementById("comprar");
+if (botonComprar) {
+    botonComprar.addEventListener("click", () => {
+        localStorage.setItem("compra", JSON.stringify(carrito));
+        window.location.href = "./compra.html";
+    });
+}
+
+// Cargar resumen de compra en compra.html
+const cargarResumenCompra = () => {
+    const resumenCompra = document.getElementById("resumen-compra");
+    const totalCompra = document.getElementById("total-compra");
+
+    if (resumenCompra && totalCompra) {
+        const compra = JSON.parse(localStorage.getItem("compra")) || [];
+
+        resumenCompra.innerHTML = "";
+        compra.forEach((prod) => {
+            const div = document.createElement("div");
+            div.classList.add("producto");
+
+            div.innerHTML = `
+                <img src="${prod.img}" alt="${prod.nombre}" style="width: 100px; height: auto;">
+                <h3>${prod.nombre}</h3>
+                <p>$${prod.precio}</p>
+                <p>Cantidad: ${prod.cantidad}</p>
+            `;
+
+            resumenCompra.appendChild(div);
+        });
+
+        totalCompra.textContent = `Total: $${compra.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0)}`;
+    }
+};
+
+// Confirmar compra
+const botonConfirmarCompra = document.getElementById("confirmar-compra");
+if (botonConfirmarCompra) {
+    botonConfirmarCompra.addEventListener("click", () => {
+        localStorage.removeItem("compra");
+        localStorage.removeItem("carrito");
+        alert("¡Gracias por tu compra!");
+        window.location.href = "../index.html";
+    });
+}
+
 // Inicialización
-renderizarProductos(stockProductos);
+window.addEventListener("DOMContentLoaded", getData);
 actualizarCarrito();
+if (document.body.contains(document.getElementById("resumen-compra"))) {
+    cargarResumenCompra();
+}
